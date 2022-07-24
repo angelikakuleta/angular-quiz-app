@@ -23,7 +23,13 @@ namespace quiz_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Question>>> Get([FromQuery] int? quizId)
         {
-            IQueryable<Question> query = context.Questions;
+            var userId = HttpContext.User.Claims.First().Value;
+            var quizes = await context.Quiz
+                .Where(q => q.OwnerId == userId)
+                .Select(q => q.Id)
+                .ToListAsync();
+
+            IQueryable<Question> query = context.Questions.Where(q => quizes.Contains(q.QuizId));
             if (quizId != null)
                 query = query.Where(q => q.QuizId == quizId);
 
@@ -34,9 +40,15 @@ namespace quiz_backend.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Question question)
         {
-            var quiz = context.Quiz.Where(q => q.Id == question.QuizId);
+            var quiz = await context.Quiz.Where(q => q.Id == question.QuizId).FirstOrDefaultAsync();
             if (quiz == null)
                 return NotFound();
+
+            var userId = HttpContext.User.Claims.First().Value;
+            if(userId != quiz.OwnerId)
+            {
+                return BadRequest();
+            }
 
             context.Questions.Add(question);
             await context.SaveChangesAsync();

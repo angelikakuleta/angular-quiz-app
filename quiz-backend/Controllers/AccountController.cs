@@ -58,7 +58,12 @@ namespace quiz_backend.Controllers
             var signingKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes("this is the secret phrase"));
             var signingCredenstials = new SigningCredentials(signingKey, SecurityAlgorithms.HmacSha256);
 
-            var jwt = new JwtSecurityToken(signingCredentials: signingCredenstials);
+            var claims = new Claim[]
+            {
+                new Claim(JwtRegisteredClaimNames.Sub, user.Id)
+            };
+
+            var jwt = new JwtSecurityToken(signingCredentials: signingCredenstials, claims: claims);
             return new JwtSecurityTokenHandler().WriteToken(jwt);
         }
     }

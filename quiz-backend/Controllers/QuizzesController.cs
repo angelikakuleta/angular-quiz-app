@@ -25,7 +25,8 @@ namespace quiz_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Quiz>>> GetQuiz()
         {
-            return await _context.Quiz.ToListAsync();
+            var userId = HttpContext.User.Claims.First().Value;
+            return await _context.Quiz.Where(q => q.OwnerId == userId).ToListAsync();
         }
 
         // GET: api/Quizzes/5
@@ -49,6 +50,12 @@ namespace quiz_backend.Controllers
         public async Task<IActionResult> PutQuiz(int id, Quiz quiz)
         {
             if (id != quiz.Id)
+            {
+                return BadRequest();
+            }
+
+            var userId = HttpContext.User.Claims.First().Value;
+            if (userId != quiz.OwnerId)
             {
                 return BadRequest();
             }
@@ -80,6 +87,9 @@ namespace quiz_backend.Controllers
         [HttpPost]
         public async Task<ActionResult<Quiz>> PostQuiz(Quiz quiz)
         {
+            var userId = HttpContext.User.Claims.First().Value;
+            quiz.OwnerId = userId;
+
             _context.Quiz.Add(quiz);
             await _context.SaveChangesAsync();
 
