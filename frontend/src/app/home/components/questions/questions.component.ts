@@ -2,6 +2,7 @@ import { Question } from '../../interfaces/question.interface';
 import { Component, OnInit } from '@angular/core'
 import { ApiService } from '../../../core/http/api.service'
 import { Subject } from 'rxjs';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
     selector: 'questions',    
@@ -9,12 +10,14 @@ import { Subject } from 'rxjs';
 })
 export class QuestionsComponent implements OnInit {
     
+	quizId: any;
 	question: Question = {} as Question;
 	eventsSubject: Subject<Question> = new Subject<Question>();
 
-	constructor(private api: ApiService) { }
+	constructor(private api: ApiService, private route: ActivatedRoute) { }
 
 	ngOnInit(): void {
+		this.quizId = this.route.snapshot.paramMap.get('quizId');
 		this.api.questionSelected.subscribe(question => this.question = question);
 	}
 

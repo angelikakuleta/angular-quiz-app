@@ -23,6 +23,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'quizzes', component: QuizzesComponent },
+  { path: 'quizzes/:quizId', component: QuestionsComponent },
   { path: 'questions', component: QuestionListComponent },
 ]
 

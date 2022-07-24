@@ -34,4 +34,8 @@
     </mat-card-actions>
 </mat-card>
 <br>
-<question-list [events]="eventsSubject.asObservable()"></question-list>
+<question-list 
+    [quizId] = "quizId"
+    [events]="eventsSubject.asObservable()"
+>
+</question-list>

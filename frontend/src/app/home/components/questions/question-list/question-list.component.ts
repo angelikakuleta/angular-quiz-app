@@ -8,7 +8,8 @@ import { Observable } from 'rxjs';
 	templateUrl: './question-list.component.html'
 })
 export class QuestionListComponent implements OnInit {
-  
+	
+	@Input() quizId: any;
 	@Input() events!: Observable<Question>;
 	
 	questions: Array<Question> = [];
@@ -16,7 +17,7 @@ export class QuestionListComponent implements OnInit {
 	constructor(protected api: ApiService) { }
 
 	ngOnInit(): void {
-		this.api.getQuestions().subscribe(res => {
+		this.api.getQuestions(this.quizId).subscribe(res => {
 			this.questions = res;
 		});
 

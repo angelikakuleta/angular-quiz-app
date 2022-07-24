@@ -14,6 +14,7 @@
     <mat-card-actions>
         <button *ngIf="!currQuiz.id" (click)="post(currQuiz)" mat-button>POST</button>
         <button *ngIf="currQuiz.id" (click)="put(currQuiz)" mat-button>EDIT</button>
+        <button *ngIf="currQuiz.id" [routerLink]="['/quizzes', currQuiz.id]" mat-button>EDIT QUESTIONS</button>
         <button *ngIf="currQuiz.id" (click)="clear()" mat-button>CANCEL</button>
     </mat-card-actions>
 </mat-card>
