@@ -6,7 +6,7 @@ import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionsComponent } from './home/components/questions/questions.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms'
+import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
 import { MatInputModule } from '@angular/material/input';
@@ -19,12 +19,14 @@ import { RouterModule } from '@angular/router';
 import { HomeComponent } from './home/pages/home/home.component';
 import { NavComponent } from './core/nav/nav.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
+import { RegisterComponent } from './core/authentication/register/register.component';
 
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'quizzes', component: QuizzesComponent },
   { path: 'quizzes/:quizId', component: QuestionsComponent },
   { path: 'questions', component: QuestionListComponent },
+  { path: 'register', component: RegisterComponent }
 ]
 
 @NgModule({
@@ -34,7 +36,8 @@ const routes = [
     QuizzesComponent,
     QuestionListComponent,
     HomeComponent,
-    NavComponent
+    NavComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
@@ -43,6 +46,7 @@ const routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    ReactiveFormsModule,
     MatFormFieldModule,
     MatSelectModule,
     MatInputModule,
