@@ -34,4 +34,4 @@
     </mat-card-actions>
 </mat-card>
 <br>
-<question-list></question-list>
+<question-list [events]="eventsSubject.asObservable()"></question-list>

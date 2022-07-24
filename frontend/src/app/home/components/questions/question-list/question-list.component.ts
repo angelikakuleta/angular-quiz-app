@@ -1,6 +1,7 @@
 import { ApiService } from '../../../../core/http/api.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { Question } from '../../../interfaces/question.interface';
+import { Observable } from 'rxjs';
 
 @Component({
 	selector: 'question-list',
@@ -8,6 +9,8 @@ import { Question } from '../../../interfaces/question.interface';
 })
 export class QuestionListComponent implements OnInit {
   
+	@Input() events!: Observable<Question>;
+	
 	questions: Array<Question> = [];
 
 	constructor(protected api: ApiService) { }
@@ -16,5 +19,7 @@ export class QuestionListComponent implements OnInit {
 		this.api.getQuestions().subscribe(res => {
 			this.questions = res;
 		});
+
+		this.events && this.events.subscribe((question) => this.questions.push(question)) 
 	}
 }

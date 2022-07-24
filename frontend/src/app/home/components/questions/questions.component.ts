@@ -1,6 +1,7 @@
 import { Question } from '../../interfaces/question.interface';
 import { Component, OnInit } from '@angular/core'
 import { ApiService } from '../../../core/http/api.service'
+import { Subject } from 'rxjs';
 
 @Component({
     selector: 'questions',    
@@ -9,6 +10,7 @@ import { ApiService } from '../../../core/http/api.service'
 export class QuestionsComponent implements OnInit {
     
 	question: Question = {} as Question;
+	eventsSubject: Subject<Question> = new Subject<Question>();
 
 	constructor(private api: ApiService) { }
 
@@ -18,7 +20,9 @@ export class QuestionsComponent implements OnInit {
 
 	post(question: Question) {
 		question.quizId = 1;
-		this.api.postQuestion(question);     
+		this.api.postQuestion(question).subscribe(res => {
+            this.eventsSubject.next(res as Question);
+        });
 		this.clear();
 	}
 
