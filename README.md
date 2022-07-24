@@ -1,6 +1,6 @@
 # angular-quiz-app
 
-## Quick start
+### How to run
 
 ```
 cd quiz-backend
@@ -21,4 +21,12 @@ npm install
 npm start
 ```
 
-* in your browser [http://localhost:4200](http://localhost:4200) 
+* in your browser [http://localhost:4200](http://localhost:4200)
+
+### Getting started with Angular
+```
+ng new frontend --style=scss
+ng add @angular/material
+
+ng server --open=true --live-reload=true
+```
