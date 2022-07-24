@@ -1,0 +1,30 @@
+<mat-card>
+    <mat-card-title>
+        <span *ngIf="!currQuiz.id">New Quiz</span>
+        <span *ngIf="currQuiz.id">Edit Quiz</span>
+    </mat-card-title>
+    <mat-card-content>
+        <form>
+            <mat-form-field class="fullWidth">
+                <mat-label>Quiz Title</mat-label>
+                <input [(ngModel)]="currQuiz.title" name="title" matInput>
+            </mat-form-field>
+        </form>
+    </mat-card-content>
+    <mat-card-actions>
+        <button *ngIf="!currQuiz.id" (click)="post(currQuiz)" mat-button>POST</button>
+        <button *ngIf="currQuiz.id" (click)="put(currQuiz)" mat-button>EDIT</button>
+        <button *ngIf="currQuiz.id" (click)="clear()" mat-button>CANCEL</button>
+    </mat-card-actions>
+</mat-card>
+<br>
+<mat-card>
+    <mat-card-content>
+        <span *ngIf="!quizzes.length">No quizzes added</span>
+        <mat-list *ngFor="let quiz of quizzes">
+            <mat-list-item class="clickLink" (click)="this.currQuiz = quiz"> {{quiz.title}} </mat-list-item>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+    </mat-card-actions>
+</mat-card>
