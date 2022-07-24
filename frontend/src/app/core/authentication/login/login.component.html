@@ -1,0 +1,13 @@
+<mat-card>
+    <form [formGroup]="form" (ngSubmit)="login(formDirective)" #formDirective="ngForm"> 
+        <mat-form-field class="fullWidth">
+            <mat-label>Email</mat-label>
+            <input type="email" formControlName="email" name="email" matInput>
+        </mat-form-field>
+        <mat-form-field class="fullWidth">
+            <mat-label>Password</mat-label>
+            <input type="password" formControlName="password" name="password" matInput>
+        </mat-form-field>
+        <button mat-raised-button color="primary" [disabled]="!form.valid">Login</button>
+    </form>
+</mat-card>

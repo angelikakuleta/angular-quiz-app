@@ -12,11 +12,12 @@ export class RegisterComponent {
     password: ['', [Validators.required, Validators.pattern("^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[#?!@$%^&*-]).{6,}$")]]
   })
 
-  constructor(private fb: FormBuilder) {  
+  constructor(private auth: AuthService, private fb: FormBuilder) {  
   }
 
   register(formDirective: any) {
     console.log(this.form.value);
+    this.auth.register(this.form.value);
 
     formDirective.resetForm();
   }

@@ -5,7 +5,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { QuestionsComponent } from './home/components/questions/questions.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms'
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatSelectModule } from '@angular/material/select';
@@ -20,13 +20,17 @@ import { HomeComponent } from './home/pages/home/home.component';
 import { NavComponent } from './core/nav/nav.component';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { RegisterComponent } from './core/authentication/register/register.component';
+import { AuthService } from './core/authentication/auth.service';
+import { AuthInterceptor } from './core/authentication/auth.interceptor';
+import { LoginComponent } from './core/authentication/login/login.component';
 
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'quizzes', component: QuizzesComponent },
   { path: 'quizzes/:quizId', component: QuestionsComponent },
   { path: 'questions', component: QuestionListComponent },
-  { path: 'register', component: RegisterComponent }
+  { path: 'register', component: RegisterComponent },
+  { path: 'login', component: LoginComponent },
 ]
 
 @NgModule({
@@ -37,7 +41,8 @@ const routes = [
     QuestionListComponent,
     HomeComponent,
     NavComponent,
-    RegisterComponent
+    RegisterComponent,
+    LoginComponent
   ],
   imports: [
     BrowserModule,
@@ -55,7 +60,11 @@ const routes = [
     MatListModule,
     MatToolbarModule
   ],
-  providers: [ApiService],
+  providers: [
+    ApiService, 
+    AuthService, 
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
