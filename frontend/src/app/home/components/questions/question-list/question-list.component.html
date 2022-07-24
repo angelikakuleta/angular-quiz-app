@@ -2,7 +2,7 @@
     <mat-card-content>
         <span *ngIf="!questions.length">No questions added</span>
         <mat-list *ngFor="let question of questions">
-            <mat-list-item class="clickLink"> {{question.text}} </mat-list-item>
+            <mat-list-item class="clickLink" (click)="api.selectQuestion(question)"> {{question.text}} </mat-list-item>
         </mat-list>
     </mat-card-content>
     <mat-card-actions>
