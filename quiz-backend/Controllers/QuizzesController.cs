@@ -9,7 +9,6 @@ using quiz_backend.Models;
 
 namespace quiz_backend.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class QuizzesController : ControllerBase
@@ -22,11 +21,18 @@ namespace quiz_backend.Controllers
         }
 
         // GET: api/Quizzes
+        [Authorize]
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Quiz>>> GetQuiz()
         {
             var userId = HttpContext.User.Claims.First().Value;
             return await _context.Quiz.Where(q => q.OwnerId == userId).ToListAsync();
+        }
+
+        [HttpGet("all")]
+        public async Task<ActionResult<IEnumerable<Quiz>>> GetAllQuizz()
+        {
+            return await _context.Quiz.ToListAsync();
         }
 
         // GET: api/Quizzes/5
@@ -46,6 +52,7 @@ namespace quiz_backend.Controllers
         // PUT: api/Quizzes/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> PutQuiz(int id, Quiz quiz)
         {
@@ -84,6 +91,7 @@ namespace quiz_backend.Controllers
         // POST: api/Quizzes
         // To protect from overposting attacks, enable the specific properties you want to bind to, for
         // more details, see https://go.microsoft.com/fwlink/?linkid=2123754.
+        [Authorize]
         [HttpPost]
         public async Task<ActionResult<Quiz>> PostQuiz(Quiz quiz)
         {
@@ -97,6 +105,7 @@ namespace quiz_backend.Controllers
         }
 
         // DELETE: api/Quizzes/5
+        [Authorize]
         [HttpDelete("{id}")]
         public async Task<ActionResult<Quiz>> DeleteQuiz(int id)
         {

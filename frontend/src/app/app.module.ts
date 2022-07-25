@@ -23,14 +23,19 @@ import { RegisterComponent } from './core/authentication/register/register.compo
 import { AuthService } from './core/authentication/auth.service';
 import { AuthInterceptor } from './core/authentication/auth.interceptor';
 import { LoginComponent } from './core/authentication/login/login.component';
+import { PlayComponent } from './home/components/play/play.component';
+import { PlayQuizComponent } from './home/components/play/play-quiz/play-quiz.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { PlayResultComponent } from './home/components/play/play-result/play-result.component';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 const routes = [
   { path: '', component: HomeComponent },
   { path: 'quizzes', component: QuizzesComponent },
   { path: 'quizzes/:quizId', component: QuestionsComponent },
-  { path: 'questions', component: QuestionListComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
+  { path: 'play/:quizId', component: PlayQuizComponent },
 ]
 
 @NgModule({
@@ -42,7 +47,10 @@ const routes = [
     HomeComponent,
     NavComponent,
     RegisterComponent,
-    LoginComponent
+    LoginComponent,
+    PlayComponent,
+    PlayQuizComponent,
+    PlayResultComponent
   ],
   imports: [
     BrowserModule,
@@ -58,7 +66,9 @@ const routes = [
     MatCardModule,
     MatButtonModule,
     MatListModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatRadioModule,
+    MatProgressBarModule
   ],
   providers: [
     ApiService, 

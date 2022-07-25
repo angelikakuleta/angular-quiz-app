@@ -1,0 +1,19 @@
+<mat-card *ngIf="!isFinished">
+    <mat-card-content>
+        <mat-list *ngFor="let question of questions">
+            <label id="example-radio-group-label">{{question.text}}</label>
+            <mat-radio-group
+                aria-labelledby="example-radio-group-label"
+                class="example-radio-group"
+                [(ngModel)]="question.selectedAnswer">
+                <mat-radio-button class="example-radio-button" *ngFor="let answer of question.answers" [value]="answer">
+                    {{answer}}
+                </mat-radio-button>
+            </mat-radio-group>
+        </mat-list>
+    </mat-card-content>
+    <mat-card-actions>
+        <button (click)="finish()" mat-button>FINISH</button>
+    </mat-card-actions>
+</mat-card>
+<play-result *ngIf="!!isFinished" [questions]="questions"></play-result>

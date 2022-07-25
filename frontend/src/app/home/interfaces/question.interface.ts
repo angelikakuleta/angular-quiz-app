@@ -5,5 +5,7 @@ export interface Question {
     answer1: string,
     answer2: string,
     answer3: string,
-    quizId: number
+    quizId: number,
+    answers: string[],
+    selectedAnswer: string
 }

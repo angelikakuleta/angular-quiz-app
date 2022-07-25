@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 
 namespace quiz_backend.Controllers
 {
-    [Authorize]
     [Route("api/[controller]")]
     [ApiController]
     public class QuestionsController : ControllerBase
@@ -23,13 +22,7 @@ namespace quiz_backend.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Question>>> Get([FromQuery] int? quizId)
         {
-            var userId = HttpContext.User.Claims.First().Value;
-            var quizes = await context.Quiz
-                .Where(q => q.OwnerId == userId)
-                .Select(q => q.Id)
-                .ToListAsync();
-
-            IQueryable<Question> query = context.Questions.Where(q => quizes.Contains(q.QuizId));
+            IQueryable<Question> query = context.Questions;
             if (quizId != null)
                 query = query.Where(q => q.QuizId == quizId);
 
@@ -37,6 +30,7 @@ namespace quiz_backend.Controllers
             return Ok(questions);
         }
 
+        [Authorize]
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] Question question)
         {
@@ -56,6 +50,7 @@ namespace quiz_backend.Controllers
             return Ok(question);
         }
 
+        [Authorize]
         [HttpPut("{id}")]
         public async Task<IActionResult> Put(int id, [FromBody] Question question)
         {

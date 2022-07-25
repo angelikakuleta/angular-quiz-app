@@ -5,9 +5,6 @@
     <mat-toolbar-row *ngIf="auth.isAuthenticated">
         <span class="clickLink" routerLink="/quizzes">Quizzes</span>
     </mat-toolbar-row>
-    <mat-toolbar-row *ngIf="auth.isAuthenticated">
-        <span class="clickLink" routerLink="/questions">Questions</span>
-    </mat-toolbar-row>
     <mat-toolbar-row *ngIf="!auth.isAuthenticated">
         <span class="clickLink" routerLink="/register">Register</span>
     </mat-toolbar-row>
